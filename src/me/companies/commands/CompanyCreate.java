@@ -89,8 +89,20 @@ public class CompanyCreate implements CommandExecutor{
 						return true;
 
 					}
+				}else if(args.length == 3) {
+					if(isInt(args[1]) == true) {
+						plugin.economy.getBalance(p);
+						if(plugin.economy.getBalance(p) <= Integer.parseInt(args[3])){
+							Bukkit.broadcastMessage("TEst");
+					}else {
+						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't have enough money to put that into your Company Balance"));
+					}
 				}
+			}else {
+				p.sendMessage(ChatColor.translateAlternateColorCodes('&', "You must add money using numbers!"));
+				return true;
 			}
-			return false;
 		}
+		return false;
 	}
+}

@@ -3,37 +3,45 @@ package me.companies.main;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.block.SignChangeEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import me.companies.commands.CommandBalance;
 import me.companies.commands.CommandResetBalance;
 import me.companies.commands.CommandSetBalance;
 import me.companies.commands.CompanyCreate;
+import net.md_5.bungee.api.ChatColor;
 import net.milkbowl.vault.economy.Economy;
 
 public class Primal extends JavaPlugin implements Listener {
 
-	public  Economy eco = null;
+	public  Economy economy = null;
 	public void onEnable() {
 		Bukkit.getServer().getPluginManager().registerEvents(this, this);
 		getCommand("balance").setExecutor(new CommandBalance(this));
 		getCommand("setbal").setExecutor(new CommandSetBalance(this));
 		getCommand("balreset").setExecutor(new CommandResetBalance(this));
 		getCommand("company").setExecutor(new CompanyCreate(this));
+		if(!setupEconomy()) {
+			Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Missing Vault Dependency, Disabling Plugin.");
+			Bukkit.getServer().getPluginManager().disablePlugin(this);
+		}
 	}
 	public void onDisable() {
 
 	}
+	
+	private boolean setupEconomy()
+    {
+        RegisteredServiceProvider<Economy> economyProvider = getServer().getServicesManager().getRegistration(net.milkbowl.vault.economy.Economy.class);
+        if (economyProvider != null) {
+            economy = economyProvider.getProvider();
+        }
+
+        return (economy != null);
+    }
 
 	public String timePlayer(Long joindate) {
 		Long now = System.currentTimeMillis();
