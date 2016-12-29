@@ -47,7 +47,7 @@ public class CompanyCreate implements CommandExecutor{
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&l/company balance - Shows your Company Balance"));
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&l/company info <name> - Shows Company Information"));
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&l---------------------"));
-					
+
 				}else if (args[0].equalsIgnoreCase("balance")) {
 					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Value")) {
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't own a Company!"));
@@ -76,33 +76,37 @@ public class CompanyCreate implements CommandExecutor{
 					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Value")) {
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't own a Company!"));
 					}else {
-						Bukkit.broadcastMessage("test");
+						return true;
 					}
 					return true;
 				}
-					if(isInt(args[1]) == true) {
-						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "Your Company Must be a name. Numeric vaules are NOT Allowed!"));
-						return true;
-					}else {
-						plugin.createCompany(p, args[1]);
-						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou have created a Company!"));
-						return true;
+				if(isInt(args[1]) == true) {
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "Your Company Must be a name. Numeric vaules are NOT Allowed!"));
+					return true;
+				}else {
+					plugin.createCompany(p, args[1]);
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou have created a Company!"));
+					return true;
 
-					}
-				}else if(args.length == 3) {
-					if(isInt(args[2]) == true) {
+				}
+			}else if(args.length == 3) {
+				if(isInt(args[2]) == true) {
+					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Value")) {
+						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't own a Company!"));
+					}else {
 						plugin.economy.getBalance(p);
 						if(plugin.economy.getBalance(p) >= Integer.parseInt(args[2])){
 							plugin.economy.withdrawPlayer(p,Integer.parseInt(args[2]));
-							p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e[Companies] &3You have deposited" + args[2] + " &3Into your company balance!"));
+							p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e[Companies] &3You have deposited " + args[2] + " &3Into your company balance!"));
 							p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&bYour Account balance is now: $" + plugin.economy.getBalance(p)));
-					}else {
-						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't have enough money to put that into your Company Balance"));
+						}else {
+							p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't have enough money to put that into your Company Balance"));
+						}
 					}
+				}else {
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "You must add money using numbers!"));
+					return true;
 				}
-			}else {
-				p.sendMessage(ChatColor.translateAlternateColorCodes('&', "You must add money using numbers!"));
-				return true;
 			}
 		}
 		return false;
