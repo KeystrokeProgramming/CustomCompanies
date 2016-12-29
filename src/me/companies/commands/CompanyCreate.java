@@ -67,8 +67,8 @@ public class CompanyCreate implements CommandExecutor{
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't own a Company!"));
 					}else {
 						Bukkit.broadcastMessage("test");
-						return true;
 					}
+					return true;
 				}
 					if(isInt(args[1]) == true) {
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "Your Company Must be a name. Numeric vaules are NOT Allowed!"));
