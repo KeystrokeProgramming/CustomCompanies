@@ -88,11 +88,4 @@ public class Primal extends JavaPlugin implements Listener {
 	public int getMoney(Player ply) {
 		return getConfig().getInt(ply.getUniqueId().toString() + ".Company.Value");
 	}
-
-	@EventHandler
-	public void signPlace(SignChangeEvent e) {
-		if(e.getLine(0).contains("[teleport]")) {
-			e.setLine(0, ChatColor.translateAlternateColorCodes('&', "&c[teleport]"));
-		}
-	}
 }
