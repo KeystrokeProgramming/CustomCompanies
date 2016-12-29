@@ -37,7 +37,12 @@ public class CompanyCreate implements CommandExecutor{
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4Error:&c You have the incorrect usuage!"));
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Usage: /company help"));
 				}else if (args[0].equalsIgnoreCase("help")) {
-					p.sendMessage("test /company help");
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&l-------[Companies]-------"));
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&l/company create <name> - Creates Company Name"));
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&l/company close - Closes Company"));
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&l/company balance - Shows your Company Balance"));
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&l/company info <name> - Shows Company Information"));
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&l---------------------"));
 				}else if (args[0].equalsIgnoreCase("balance")) {
 					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Value")) {
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't own a Company!"));
