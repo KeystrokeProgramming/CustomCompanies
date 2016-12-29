@@ -52,20 +52,20 @@ public class Primal extends JavaPlugin implements Listener {
 
 	//Add money to Company
 	public void addMoney(Player p, int amount) {
-		getConfig().getInt(p.getUniqueId().toString() +  ".Company.Value", + amount);
+		getConfig().set(p.getUniqueId().toString() +  ".Company.Balance", getCompanyValue(p) + amount);
 		saveConfig();
 	}
 	
 
 	public int getCompanyValue(Player p) {
-		return getConfig().getInt(p.getUniqueId().toString() + ".Company.Value");
+		return getConfig().getInt(p.getUniqueId().toString() + ".Company.Balance");
 	}
 
 	//Creates Comapny when player types command (/company create <name>)
 	public void createCompany(Player p, String name) {
 		getConfig().set(p.getUniqueId().toString() + ".Company", 0);
 		getConfig().set(p.getUniqueId().toString() + ".Company.Name", name);
-		getConfig().set(p.getUniqueId().toString() + ".Company.Value", 0);
+		getConfig().set(p.getUniqueId().toString() + ".Company.Balance", 0);
 		getConfig().set(p.getUniqueId().toString() + ".Company.Employees", 0);
 		saveConfig();
 	}
@@ -85,23 +85,23 @@ public class Primal extends JavaPlugin implements Listener {
 		getConfig().set(p.getUniqueId().toString(), null);
 		getConfig().set(p.getUniqueId().toString() + ".Company", null);
 		getConfig().set(p.getUniqueId().toString() + ".Company.Name", null);
-		getConfig().set(p.getUniqueId().toString() + ".Company.Value", null);
+		getConfig().set(p.getUniqueId().toString() + ".Company.Balance", null);
 		getConfig().set(p.getUniqueId().toString() + ".Company.Employees", null);
 		saveConfig();
 	}
 	//Set Money
 	public void setMoney(Player p, int amount) {
-		getConfig().set(p.getUniqueId().toString() + ".Company.Value", getMoney(p) + amount);
+		getConfig().set(p.getUniqueId().toString() + ".Company.Balance", getMoney(p) + amount);
 		saveConfig();
 	}
 
 	//Reset Balance
 	public void resetBalance(Player p, int amount) {
-		getConfig().set(p.getUniqueId().toString() + ".Company.Value", amount);
+		getConfig().set(p.getUniqueId().toString() + ".Company.Balance", amount);
 		saveConfig();
 	}
 	//Get Money
 	public int getMoney(Player ply) {
-		return getConfig().getInt(ply.getUniqueId().toString() + ".Company.Value");
+		return getConfig().getInt(ply.getUniqueId().toString() + ".Company.Balance");
 	}
 }

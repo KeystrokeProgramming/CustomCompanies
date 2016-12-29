@@ -1,6 +1,5 @@
 package me.companies.commands;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -49,18 +48,18 @@ public class CompanyCreate implements CommandExecutor{
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&l---------------------"));
 
 				}else if (args[0].equalsIgnoreCase("balance")) {
-					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Value")) {
+					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Balance")) {
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't own a Company!"));
 					}else {
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3Your company value is $" + plugin.getCompanyValue(p) + ""));
 					}
 				}else if(args[0].equalsIgnoreCase("close")) {
-					if (plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Value")) {
+					if (plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Balance")) {
 						plugin.closeCompany(p);
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aYou have sucessfully closed your company!"));
 					}
 				}else if(args[0].equalsIgnoreCase("info")) {
-					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Value")) {
+					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Balance")) {
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't own a Company!"));
 					}else {
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&f&l------[Company Info]------"));
@@ -73,7 +72,7 @@ public class CompanyCreate implements CommandExecutor{
 				}
 			}else if (args.length == 2) {
 				if(args[1].equalsIgnoreCase("add")){
-					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Value")) {
+					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Balance")) {
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't own a Company!"));
 					}else {
 						return true;
@@ -97,7 +96,7 @@ public class CompanyCreate implements CommandExecutor{
 					}
 					if(plugin.economy.getBalance(p) >= Integer.parseInt(args[2])){
 						plugin.economy.withdrawPlayer(p,Integer.parseInt(args[2]));
-						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e[Companies] &3You have deposited " + args[2] + " &3Into your company balance!"));
+						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e[Companies] &3You have deposited &a$" + args[2] + " &3Into your company balance!"));
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&bYour Account balance is now: $" + plugin.economy.getBalance(p)));
 						plugin.addMoney(p, Integer.parseInt(args[2]));
 					}else {
