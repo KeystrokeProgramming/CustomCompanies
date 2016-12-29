@@ -1,5 +1,7 @@
 package me.companies.main;
 
+import java.util.List;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -63,6 +65,17 @@ public class Primal extends JavaPlugin implements Listener {
 		getConfig().set(p.getUniqueId().toString() + ".Company.Value", 0);
 		getConfig().set(p.getUniqueId().toString() + ".Company.Employees", 0);
 		saveConfig();
+	}
+	
+	public String getCompanyName(Player p) {
+		return getConfig().getString(p.getUniqueId().toString() + ".Company.Name");
+		
+	}
+	public int getCompanyEmployees(Player p) {
+		return getConfig().getInt(p.getUniqueId().toString() + ".Company.Employees");
+	}
+	public List<String> getCompanyEmployeeNames(Player p) {
+		return getConfig().getStringList(p.getUniqueId().toString() + ".Company.Employees.Names");
 	}
 	//Close Company when player types command (/company <close>)
 	public void closeCompany(Player p) {
