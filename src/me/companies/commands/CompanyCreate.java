@@ -48,7 +48,7 @@ public class CompanyCreate implements CommandExecutor{
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&l/company info <name> - Shows Company Information"));
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&l---------------------"));
 				}else if (args[0].equalsIgnoreCase("balance")) {
-					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Value")) {
+					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Name")) {
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't own a Company!"));
 					}else {
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3Your company value is $" + plugin.getCompanyValue(p) + ""));
@@ -59,7 +59,11 @@ public class CompanyCreate implements CommandExecutor{
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aYou have sucessfully closed your company!"));
 					}
 				}else if(args[0].equalsIgnoreCase("info")) {
-
+					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Name")) {
+						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't own a Company!"));
+					}else {
+						
+					}
 				}
 			}else if (args.length == 2) {
 				if(args[1].equalsIgnoreCase("add")){
