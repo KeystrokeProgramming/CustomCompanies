@@ -46,6 +46,7 @@ public class Primal extends JavaPlugin implements Listener {
 		return fulldate;
 	}
 
+	//Add money to Company
 	public void addMoney(Player p, int amount) {
 		getConfig().getInt(p.getUniqueId().toString() +  ".Company.Value", + amount);
 		saveConfig();
@@ -55,6 +56,7 @@ public class Primal extends JavaPlugin implements Listener {
 		return getConfig().getInt(p.getUniqueId().toString() + ".Company.Value");
 	}
 
+	//Creates Comapny when player types command (/company create <name>)
 	public void createCompany(Player p, String name) {
 		getConfig().set(p.getUniqueId().toString() + ".Company", 0);
 		getConfig().set(p.getUniqueId().toString() + ".Company.Name", name);
@@ -62,7 +64,7 @@ public class Primal extends JavaPlugin implements Listener {
 		getConfig().set(p.getUniqueId().toString() + ".Company.Employees", 0);
 		saveConfig();
 	}
-
+	//Close Company when player types command (/company <close>)
 	public void closeCompany(Player p) {
 		getConfig().set(p.getUniqueId().toString(), null);
 		getConfig().set(p.getUniqueId().toString() + ".Company", null);
@@ -71,17 +73,18 @@ public class Primal extends JavaPlugin implements Listener {
 		getConfig().set(p.getUniqueId().toString() + ".Company.Employees", null);
 		saveConfig();
 	}
-
+	//Set Money
 	public void setMoney(Player p, int amount) {
 		getConfig().set(p.getUniqueId().toString() + ".Company.Value", getMoney(p) + amount);
 		saveConfig();
 	}
 
+	//Reset Balance
 	public void resetBalance(Player p, int amount) {
 		getConfig().set(p.getUniqueId().toString() + ".Company.Value", amount);
 		saveConfig();
 	}
-
+	//Get Money
 	public int getMoney(Player ply) {
 		return getConfig().getInt(ply.getUniqueId().toString() + ".Company.Value");
 	}
