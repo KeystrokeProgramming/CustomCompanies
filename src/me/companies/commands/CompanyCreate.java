@@ -59,24 +59,28 @@ public class CompanyCreate implements CommandExecutor{
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aYou have sucessfully closed your company!"));
 					}
 				}else if(args[0].equalsIgnoreCase("info")) {
-					
+
 				}
 			}else if (args.length == 2) {
 				if(args[1].equalsIgnoreCase("add")){
-					Bukkit.broadcastMessage("test");
-					return true;
+					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Value")) {
+						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't own a Company!"));
+					}else {
+						Bukkit.broadcastMessage("test");
+						return true;
+					}
 				}
-				if(isInt(args[1]) == true) {
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "Your Company Must be a name. Numeric vaules are NOT Allowed!"));
-					return true;
-				}else {
-					plugin.createCompany(p, args[1]);
-					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou have created a Company!"));
-					return true;
+					if(isInt(args[1]) == true) {
+						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "Your Company Must be a name. Numeric vaules are NOT Allowed!"));
+						return true;
+					}else {
+						plugin.createCompany(p, args[1]);
+						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou have created a Company!"));
+						return true;
 
+					}
 				}
 			}
+			return false;
 		}
-		return false;
 	}
-}
