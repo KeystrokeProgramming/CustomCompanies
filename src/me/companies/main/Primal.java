@@ -1,4 +1,4 @@
-package me.goldeconomy.main;
+package me.companies.main;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -13,10 +13,10 @@ import org.bukkit.event.block.SignChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.goldeconomy.commands.CommandBalance;
-import me.goldeconomy.commands.CommandResetBalance;
-import me.goldeconomy.commands.CommandSetBalance;
-import me.goldeconomy.commands.CompanyCreate;
+import me.companies.commands.CommandBalance;
+import me.companies.commands.CommandResetBalance;
+import me.companies.commands.CommandSetBalance;
+import me.companies.commands.CompanyCreate;
 import net.milkbowl.vault.economy.Economy;
 
 public class Primal extends JavaPlugin implements Listener {
