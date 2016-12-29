@@ -2,6 +2,7 @@ package me.companies.commands;
 
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -27,15 +28,15 @@ public class CompanyCreate implements CommandExecutor{
 		}
 		return true;
 	}
-	
+
 	public static HashMap<String, Long> invitedPlayers = new HashMap<String, Long>();
-	 
+
 	public void invitePlayer(Player player, int seconds) { //Invite the playe for a specified time in seconds
-	    if (seconds > 0) {       
-	        invitedPlayers.put(player.getName(), ((seconds * 1000) + System.currentTimeMillis()));
-	        player.sendMessage(ChatColor.GOLD + "You have been invited to a game!"); //You can change this as need be
-	        player.sendMessage(ChatColor.GRAY + "" + seconds + " seconds left to type /accept and join the game."); //Same with this message
-	    }       
+		if (seconds > 0) {       
+			invitedPlayers.put(player.getName(), ((seconds * 1000) + System.currentTimeMillis()));
+			player.sendMessage(ChatColor.GOLD + "You have been invited to a game!"); //You can change this as need be
+			player.sendMessage(ChatColor.GRAY + "" + seconds + " seconds left to type /accept and join the game."); //Same with this message
+		}       
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
@@ -58,7 +59,6 @@ public class CompanyCreate implements CommandExecutor{
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&l/company balance - Shows your Company Balance"));
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&l/company info <name> - Shows Company Information"));
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&l---------------------"));
-
 				}else if (args[0].equalsIgnoreCase("balance")) {
 					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Balance")) {
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't own a Company!"));
@@ -70,6 +70,9 @@ public class CompanyCreate implements CommandExecutor{
 						plugin.closeCompany(p);
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aYou have sucessfully closed your company!"));
 					}
+				}else if(args[0].equalsIgnoreCase("invite")) {
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4Error:&c You have the incorrect usuage!"));
+					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Usage: /company invite <name>"));
 				}else if(args[0].equalsIgnoreCase("info")) {
 					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Balance")) {
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't own a Company!"));
@@ -81,31 +84,49 @@ public class CompanyCreate implements CommandExecutor{
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aNames of Employees: " + plugin.getCompanyEmployeeNames(p)));
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&f&l------[Company Info]------"));
 					}
-				}else if(args[0].equalsIgnoreCase("invite")){
-					this.invitePlayer(p, 15);
 				}else if (args[0].equalsIgnoreCase("join")) {
 					if (invitedPlayers.containsKey(p.getName())) { //If the player was invited at some point, check if the invitation has expired
-		                long inviteEnds = invitedPlayers.get(p.getName());
-		                if (inviteEnds >= System.currentTimeMillis()) { //If the invitation is still valid, let him join the game
-		                    //Add player to game
-		                } else { //If the invitation has expired, tell the player and remove him from the invitation list
-		                    invitedPlayers.remove(p.getName());
-		                    p.sendMessage(ChatColor.RED + "Your invitation to join the company expired!");
-		                    p.sendMessage(ChatColor.YELLOW + "You'll need to get invited again to join the company!");
-		                }
-		            } else { //If the player hasn't ever received an invite or the last one expired and was removed, tell him
-		                p.sendMessage(ChatColor.RED + "You need to receive an invitation before you can join a company");
-		            }
+						long inviteEnds = invitedPlayers.get(p.getName());
+						if (inviteEnds >= System.currentTimeMillis()) { //If the invitation is still valid, let him join the game
+							if(plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Employees.Names")); {
+								Bukkit.broadcastMessage("you're already in a company");
+							}else {
+								
+							}
+						} else { //If the invitation has expired, tell the player and remove him from the invitation list
+							invitedPlayers.remove(p.getName());
+							p.sendMessage(ChatColor.RED + "Your invitation to join the company expired!");
+							p.sendMessage(ChatColor.YELLOW + "You'll need to get invited again to join the company!");
+						}
+					} else { //If the player hasn't ever received an invite or the last one expired and was removed, tell him
+						p.sendMessage(ChatColor.RED + "You need to receive an invitation before you can join a company");
+					}
 				}
 			}else if (args.length == 2) {
 				if(args[1].equalsIgnoreCase("add")){
-					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Balance")) {
+					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Name")) {
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't own a Company!"));
 					}else {
 						return true;
 					}
 					return true;
 				}
+				Player target = (Player) Bukkit.getPlayerExact(args[1]);
+				if(args[1].equals(target.getName())){
+					if(args[1] == null) {
+						p.sendMessage(ChatColor.RED  + "Target:" + args[1] + " is not online!");
+						return true;
+					}
+					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Name")) {
+						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't own a Company!"));
+						return true;
+					}
+					this.invitePlayer(target, 15);
+					return true;
+				}else {
+					Bukkit.broadcastMessage("test null?");
+				}
+
 				if(isInt(args[1]) == true) {
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "Your Company Must be a name. Numeric vaules are NOT Allowed!"));
 					return true;
