@@ -8,9 +8,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import me.companies.commands.CommandBalance;
-import me.companies.commands.CommandResetBalance;
-import me.companies.commands.CommandSetBalance;
 import me.companies.commands.CompanyCreate;
 import net.md_5.bungee.api.ChatColor;
 import net.milkbowl.vault.economy.Economy;
@@ -20,9 +17,6 @@ public class Primal extends JavaPlugin implements Listener {
 	public  Economy economy = null;
 	public void onEnable() {
 		Bukkit.getServer().getPluginManager().registerEvents(this, this);
-		getCommand("balance").setExecutor(new CommandBalance(this));
-		getCommand("setbal").setExecutor(new CommandSetBalance(this));
-		getCommand("balreset").setExecutor(new CommandResetBalance(this));
 		getCommand("company").setExecutor(new CompanyCreate(this));
 		if(!setupEconomy()) {
 			Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "Missing Vault Dependency, Disabling Plugin.");

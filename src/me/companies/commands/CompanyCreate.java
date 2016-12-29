@@ -90,9 +90,9 @@ public class CompanyCreate implements CommandExecutor{
 
 					}
 				}else if(args.length == 3) {
-					if(isInt(args[1]) == true) {
+					if(isInt(args[2]) == true) {
 						plugin.economy.getBalance(p);
-						if(plugin.economy.getBalance(p) <= Integer.parseInt(args[3])){
+						if(plugin.economy.getBalance(p) <= Integer.parseInt(args[2])){
 							Bukkit.broadcastMessage("TEst");
 					}else {
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't have enough money to put that into your Company Balance"));
