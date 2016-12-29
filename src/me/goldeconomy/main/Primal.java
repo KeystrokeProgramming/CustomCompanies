@@ -1,0 +1,109 @@
+package me.goldeconomy.main;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.block.SignChangeEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import me.goldeconomy.commands.CommandBalance;
+import me.goldeconomy.commands.CommandResetBalance;
+import me.goldeconomy.commands.CommandSetBalance;
+import me.goldeconomy.commands.CompanyCreate;
+import net.milkbowl.vault.economy.Economy;
+
+public class Primal extends JavaPlugin implements Listener {
+
+	public  Economy eco = null;
+	public void onEnable() {
+		Bukkit.getServer().getPluginManager().registerEvents(this, this);
+		getCommand("balance").setExecutor(new CommandBalance(this));
+		getCommand("setbal").setExecutor(new CommandSetBalance(this));
+		getCommand("balreset").setExecutor(new CommandResetBalance(this));
+		getCommand("company").setExecutor(new CompanyCreate(this));
+	}
+	public void onDisable() {
+
+	}
+
+	public String timePlayer(Long joindate) {
+		Long now = System.currentTimeMillis();
+		Long date = now - joindate; 
+
+		long seconds = date / 1000 % 60;
+		long minutes = date / (60 * 1000) % 60;
+		long hours = date / (60 * 60 * 1000) % 24;
+		long days = date / (24 * 60 * 60 * 1000);
+
+		String fulldate = days+" d "+hours+" h "+minutes+" m "+seconds+" s";
+		return fulldate;
+	}
+
+	public void addMoney(Player p, int amount) {
+		getConfig().getInt(p.getUniqueId().toString() +  ".Company.Value", + amount);
+		saveConfig();
+	}
+
+	public int getCompanyValue(Player p) {
+		return getConfig().getInt(p.getUniqueId().toString() + ".Company.Value");
+	}
+
+	public void createCompany(Player p, String name) {
+		getConfig().set(p.getUniqueId().toString() + ".Company", 0);
+		getConfig().set(p.getUniqueId().toString() + ".Company.Name", name);
+		getConfig().set(p.getUniqueId().toString() + ".Company.Value", 0);
+		getConfig().set(p.getUniqueId().toString() + ".Company.Employees", 0);
+		saveConfig();
+	}
+
+	public void closeCompany(Player p) {
+		getConfig().set(p.getUniqueId().toString(), null);
+		getConfig().set(p.getUniqueId().toString() + ".Company", null);
+		getConfig().set(p.getUniqueId().toString() + ".Company.Name", null);
+		getConfig().set(p.getUniqueId().toString() + ".Company.Value", null);
+		getConfig().set(p.getUniqueId().toString() + ".Company.Employees", null);
+		saveConfig();
+	}
+
+	public void setMoney(Player p, int amount) {
+		getConfig().set(p.getUniqueId().toString() + ".Company.Value", getMoney(p) + amount);
+		saveConfig();
+	}
+
+	public void resetBalance(Player p, int amount) {
+		getConfig().set(p.getUniqueId().toString() + ".Company.Value", amount);
+		saveConfig();
+	}
+
+	public int getMoney(Player ply) {
+		return getConfig().getInt(ply.getUniqueId().toString() + ".Company.Value");
+	}
+
+	@EventHandler
+	public void signPlace(SignChangeEvent e) {
+		if(e.getLine(0).contains("[teleport]")) {
+			e.setLine(0, ChatColor.translateAlternateColorCodes('&', "&c[teleport]"));
+		}
+	}
+
+	@EventHandler
+	public void signInteract(PlayerInteractEvent e) {
+		Block block = e.getClickedBlock();
+		if(e.getAction() == Action.RIGHT_CLICK_BLOCK) {
+			if(block.getType() == Material.SIGN || block.getType() == Material.SIGN_POST || block.getType() == Material.WALL_SIGN) {
+				Sign sign = (Sign) e.getClickedBlock().getState();
+				if(sign.getLine(0).contains("[Buy]")) {
+					return;
+				}
+
+			}
+		}
+	}
+}
