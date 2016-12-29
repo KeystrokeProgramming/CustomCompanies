@@ -2,7 +2,4 @@ name: Companies
 main: me.companies.main.Primal
 version: 1.11
 commands:
- balance:
- setbal:
- balreset:
  company:
