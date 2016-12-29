@@ -95,18 +95,4 @@ public class Primal extends JavaPlugin implements Listener {
 			e.setLine(0, ChatColor.translateAlternateColorCodes('&', "&c[teleport]"));
 		}
 	}
-
-	@EventHandler
-	public void signInteract(PlayerInteractEvent e) {
-		Block block = e.getClickedBlock();
-		if(e.getAction() == Action.RIGHT_CLICK_BLOCK) {
-			if(block.getType() == Material.SIGN || block.getType() == Material.SIGN_POST || block.getType() == Material.WALL_SIGN) {
-				Sign sign = (Sign) e.getClickedBlock().getState();
-				if(sign.getLine(0).contains("[Buy]")) {
-					return;
-				}
-
-			}
-		}
-	}
 }
