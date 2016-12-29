@@ -34,8 +34,8 @@ public class CompanyCreate implements CommandExecutor{
 	public void invitePlayer(Player player, int seconds) { //Invite the playe for a specified time in seconds
 		if (seconds > 0) {       
 			invitedPlayers.put(player.getName(), ((seconds * 1000) + System.currentTimeMillis()));
-			player.sendMessage(ChatColor.GOLD + "You have been invited to a game!"); //You can change this as need be
-			player.sendMessage(ChatColor.GRAY + "" + seconds + " seconds left to type /accept and join the game."); //Same with this message
+			player.sendMessage(ChatColor.GOLD + "You have been invited to a company!"); //You can change this as need be
+			player.sendMessage(ChatColor.GRAY + "" + seconds + " seconds left to type /company join to join the company."); //Same with this message
 		}       
 	}
 
@@ -90,10 +90,8 @@ public class CompanyCreate implements CommandExecutor{
 						if (inviteEnds >= System.currentTimeMillis()) { //If the invitation is still valid, let him join the game
 							if(plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Employees.Names")); {
 								Bukkit.broadcastMessage("you're already in a company");
-							}else {
-								
 							}
-						} else { //If the invitation has expired, tell the player and remove him from the invitation list
+						}else { //If the invitation has expired, tell the player and remove him from the invitation list
 							invitedPlayers.remove(p.getName());
 							p.sendMessage(ChatColor.RED + "Your invitation to join the company expired!");
 							p.sendMessage(ChatColor.YELLOW + "You'll need to get invited again to join the company!");
