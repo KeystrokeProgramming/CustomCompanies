@@ -91,18 +91,17 @@ public class CompanyCreate implements CommandExecutor{
 				}
 			}else if(args.length == 3) {
 				if(isInt(args[2]) == true) {
-					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Value")) {
+					if (!plugin.getConfig().contains(p.getUniqueId().toString() + ".Company.Name")) {
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't own a Company!"));
+						return true;
+					}
+					if(plugin.economy.getBalance(p) >= Integer.parseInt(args[2])){
+						plugin.economy.withdrawPlayer(p,Integer.parseInt(args[2]));
+						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e[Companies] &3You have deposited " + args[2] + " &3Into your company balance!"));
+						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&bYour Account balance is now: $" + plugin.economy.getBalance(p)));
+						plugin.addMoney(p, Integer.parseInt(args[2]));
 					}else {
-						plugin.economy.getBalance(p);
-						if(plugin.economy.getBalance(p) >= Integer.parseInt(args[2])){
-							plugin.economy.withdrawPlayer(p,Integer.parseInt(args[2]));
-							p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e[Companies] &3You have deposited " + args[2] + " &3Into your company balance!"));
-							p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&bYour Account balance is now: $" + plugin.economy.getBalance(p)));
-							plugin.addMoney(p, Integer.parseInt(args[2]));
-						}else {
-							p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't have enough money to put that into your Company Balance"));
-						}
+						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4ERROR:&c You don't have enough money to put that into your Company Balance"));
 					}
 				}else {
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "You must add money using numbers!"));

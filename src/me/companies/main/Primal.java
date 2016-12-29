@@ -55,6 +55,7 @@ public class Primal extends JavaPlugin implements Listener {
 		getConfig().getInt(p.getUniqueId().toString() +  ".Company.Value", + amount);
 		saveConfig();
 	}
+	
 
 	public int getCompanyValue(Player p) {
 		return getConfig().getInt(p.getUniqueId().toString() + ".Company.Value");
