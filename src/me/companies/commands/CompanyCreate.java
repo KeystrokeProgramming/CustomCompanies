@@ -1,5 +1,6 @@
 package me.companies.commands;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -29,6 +30,9 @@ public class CompanyCreate implements CommandExecutor{
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		Player p = (Player) sender;
 		if(cmd.getLabel().equalsIgnoreCase("company")) {
+			if(!(sender instanceof Player)) {
+				sender.sendMessage(ChatColor.RED + "You must be a player, and in online game to use this command");
+			}
 			if(args.length == 0) {
 				p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&4Error:&c You have the incorrect usuage!"));
 				p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Usage: /company help"));
@@ -58,11 +62,17 @@ public class CompanyCreate implements CommandExecutor{
 					
 				}
 			}else if (args.length == 2) {
+				if(args[1].equalsIgnoreCase("add")){
+					Bukkit.broadcastMessage("test");
+					return true;
+				}
 				if(isInt(args[1]) == true) {
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "Your Company Must be a name. Numeric vaules are NOT Allowed!"));
+					return true;
 				}else {
 					plugin.createCompany(p, args[1]);
 					p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&cYou have created a Company!"));
+					return true;
 
 				}
 			}
