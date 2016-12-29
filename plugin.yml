@@ -1,5 +1,5 @@
-name: GoldEconomy
-main: me.goldeconomy.main.Primal
+name: Companies
+main: me.companies.main.Primal
 version: 1.11
 commands:
  balance:

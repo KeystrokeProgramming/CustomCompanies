@@ -54,6 +54,8 @@ public class CompanyCreate implements CommandExecutor{
 						plugin.closeCompany(p);
 						p.sendMessage(ChatColor.translateAlternateColorCodes('&', "&aYou have sucessfully closed your company!"));
 					}
+				}else if(args[0].equalsIgnoreCase("info")) {
+					
 				}
 			}else if (args.length == 2) {
 				if(isInt(args[1]) == true) {
